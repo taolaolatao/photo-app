@@ -19,19 +19,23 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
-app.get("/gioi-thieu", (req, res) => {
-  res.render("introduct");
+app.get("/introduction", (req, res) => {
+  res.render("introduction");
 });
 
-app.get("/gia-chup-hinh", (req, res) => {
-  res.render("price");
+app.get("/price-new-born", (req, res) => {
+  res.render("price-new-born");
 });
 
-app.get("/hinh-anh", (req, res) => {
+app.get("/price-baby", (req, res) => {
+  res.render("price-baby");
+});
+
+app.get("/images", (req, res) => {
   res.render("images");
 });
 
-app.get("/lien-he", (req, res) => {
+app.get("/contact", (req, res) => {
   res.render("contact");
 });
 
