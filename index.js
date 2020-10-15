@@ -1,19 +1,19 @@
 require("dotenv").config();
-require("./config/db");
 const cors = require("cors");
 const helmet = require("helmet");
 const express = require("express");
+const db = require("./config/db");
 const app = express();
-const photos = require("./routes");
 
-app.use(helmet());
+if(process.env.DEV === 'PRODUCTION'){
+  app.use(helmet());
+  app.use(cors());
+}
+
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(cors());
 app.set("view engine", "ejs");
-
-app.use("/photos", photos);
 
 app.get("/", (req, res) => {
   res.render("index");
@@ -31,8 +31,12 @@ app.get("/price-baby", (req, res) => {
   res.render("price-baby");
 });
 
-app.get("/images", (req, res) => {
-  res.render("images");
+app.get("/photos", (req, res) => {
+  db.query("SELECT * FROM photos", function (error, results, _) {
+    if (error) return res.render("photos", { results: [], error: 'Oop!! Wrong something' });
+
+    return res.render("photos", { results, error: '' });
+  });
 });
 
 app.get("/contact", (req, res) => {
