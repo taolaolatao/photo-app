@@ -1,20 +1,9 @@
-const mysql = require("mysql");
+const mongoose = require('mongoose');
 
-const connection = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "photo-app",
-  charset: "utf8_general_ci",
-});
+mongoose.connect(process.env.DB_CONNECTION, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+}).catch(err => console.error(err))
 
-connection.connect(function (err) {
-  if (err) {
-    console.error("error connecting: " + err.stack);
-    return;
-  }
+module.exports = mongoose;
 
-  console.log("connected as id " + connection.threadId);
-});
-
-module.exports = connection;
